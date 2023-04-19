@@ -14,6 +14,23 @@ Overall, this approach allows you to leverage the power of FinBERT for financial
 
 
 
+for i, (document, url) in enumerate(documents):
+    embedding = model.encode(document)
+    index.add_item(i, embedding)
+    index.set_item_vector(i, embedding)
+    index.set_item_data(i, json.dumps({"url": url}))
+
+# Build the index
+index.build(10)
+
+# Query the index and retrieve the URLs of the top results
+query = "What is the price of AAPL stock?"
+query_embedding = model.encode(query)
+results = index.get_nns_by_vector(query_embedding, 5)
+for i in results:
+    item_data = json.loads(index.get_item_data(i))
+    print(item_data["url"])
+
 
 
 
