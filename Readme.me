@@ -11,3 +11,28 @@ Training: The model is then trained on a dataset of queries and relevant documen
 Inference: Once the model has been trained, it can be used for inference. Given a user query, the model generates an embedding representation of the query. The model then computes the cosine similarity between the query embedding and the embedding representations of all the documents in the corpus. The documents with the highest cosine similarity scores are returned as the top matches.
 
 Overall, this approach allows you to leverage the power of FinBERT for financial domain-specific document retrieval while also tailoring the embeddings for your specific use case using the two-tower architecture.
+
+
+
+
+
+
+
+
+Gather a dataset of documents and their corresponding queries. This dataset should also contain relevance labels indicating whether a given document is relevant or not for a given query.
+
+Preprocess the dataset by tokenizing the queries and documents using the same tokenization method used to pretrain the FinBERT model. You should also encode the queries and documents using the FinBERT tokenizer and create a numerical representation for each.
+
+Divide the dataset into training and validation sets.
+
+Define the two-tower architecture. In this architecture, you will use two identical FinBERT models to represent the queries and documents. Each FinBERT model will have its own set of learned weights. During training, the weights of both models will be updated simultaneously. The output of each FinBERT model will be a vector representation of the query or document.
+
+Define the loss function. The loss function will compare the similarity between the query and the relevant documents and the dissimilarity between the query and the irrelevant documents. The similarity can be measured using the cosine similarity between the query vector and the document vector.
+
+Train the two-tower model on the training set. During training, the model will learn to map the query vectors and document vectors into a common space where relevant documents are close to the corresponding query vector.
+
+Evaluate the model on the validation set. You can use metrics such as Mean Reciprocal Rank (MRR) or Normalized Discounted Cumulative Gain (NDCG) to evaluate the performance of the model.
+
+If the performance of the model is not satisfactory, you can adjust the hyperparameters or the architecture of the model and repeat the training process until you achieve the desired performance.
+
+Once you are satisfied with the performance of the model, you can use it to retrieve relevant documents for new queries.
