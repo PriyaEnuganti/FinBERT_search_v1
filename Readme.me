@@ -1,3 +1,10 @@
+
+last_hidden_state = outputs.last_hidden_state
+        pooled_output = last_hidden_state[:, 0, :]
+        pooled_output = self.dropout(pooled_output)
+        refined_query_embedding = self.linear(pooled_output)
+        return refined_query_embedding
+
 Preprocessing the data: The first step is to preprocess the data. The documents and user queries need to be cleaned and tokenized before feeding them into the model. You may also need to apply some specific preprocessing steps depending on the nature of the data.
 
 
