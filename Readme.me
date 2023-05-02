@@ -1,4 +1,14 @@
 
+
+ max_length = max([len(embedding) for embedding in embeddings])
+    padded_embeddings = []
+    for embedding in embeddings:
+        if len(embedding) < max_length:
+            padding_length = max_length - len(embedding)
+            embedding = np.pad(embedding, [(0, padding_length)], mode='constant')
+        padded_embeddings.append(embedding)
+
+
 last_hidden_state = outputs.last_hidden_state
         pooled_output = last_hidden_state[:, 0, :]
         pooled_output = self.dropout(pooled_output)
