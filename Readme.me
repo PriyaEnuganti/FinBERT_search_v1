@@ -1,4 +1,14 @@
 
+
+
+query_embedding = pad_sequence([torch.tensor(embedding) for embedding in query_embedding], 
+                                        batch_first=True, padding_value=0.0)
+doc_embedding = pad_sequence([torch.tensor(embedding) for embedding in doc_embedding], 
+                                        batch_first=True, padding_value=0.0)
+        
+
+
+
 import torch
 from torch.utils.data import Dataset, DataLoader
 
