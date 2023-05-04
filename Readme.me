@@ -1,4 +1,5 @@
 
+query_input_ids = torch.cat((query_embedding['input_ids'], torch.zeros(self.max_length - len(query_embedding['input_ids']), dtype=torch.long)), dim=0)
 
 
 class EmbeddingDataset(Dataset):
