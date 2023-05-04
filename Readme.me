@@ -1,6 +1,40 @@
 
+import torch
+from torch.utils.data import Dataset, DataLoader
 
- max_length = max([len(embedding) for embedding in embeddings])
+class MyDataset(Dataset):
+    def __init__(self, query_embeddings, doc_embeddings, labels):
+        self.query_embeddings = query_embeddings
+        self.doc_embeddings = doc_embeddings
+        self.labels = labels
+        
+    def __len__(self):
+        return len(self.labels)
+    
+    def __getitem__(self, idx):
+        query_embedding = self.query_embeddings[idx]
+        doc_embedding = self.doc_embeddings[idx]
+        label = self.labels[idx]
+        
+        return query_embedding, doc_embedding, label
+
+batch_size = 12
+dataset = MyDataset(query_embeddings, doc_embeddings, labels)
+dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
+In this case, the __getitem__ method returns the query embedding, document embedding, and label as they are without converting them into tensors.
+
+
+
+
+
+
+
+
+
+
+
+
+max_length = max([len(embedding) for embedding in embeddings])
     padded_embeddings = []
     for embedding in embeddings:
         if len(embedding) < max_length:
