@@ -1,6 +1,39 @@
 
 
 
+class EmbeddingDataset(Dataset):
+    def __init__(self, query_embeddings, doc_embeddings, labels):
+        self.query_embeddings = query_embeddings
+        self.doc_embeddings = doc_embeddings
+        self.labels = labels
+
+        # Determine the maximum length of the embeddings
+        self.max_length = max([len(embedding['input_ids']) for embedding in query_embeddings + doc_embeddings])
+        
+    def __len__(self):
+        return len(self.labels)
+    
+    def __getitem__(self, idx):
+        query_embedding = self.query_embeddings[idx]
+        doc_embedding = self.doc_embeddings[idx]
+        label = self.labels[idx]
+
+        # Pad the query and document embeddings
+        query_input_ids = query_embedding['input_ids'] + [0] * (self.max_length - len(query_embedding['input_ids']))
+        query_attention_mask = query_embedding['attention_mask'] + [0] * (self.max_length - len(query_embedding['attention_mask']))
+        doc_input_ids = doc_embedding['input_ids'] + [0] * (self.max_length - len(doc_embedding['input_ids']))
+        doc_attention_mask = doc_embedding['attention_mask'] + [0] * (self.max_length - len(doc_embedding['attention_mask']))
+        
+        return {'query_input_ids': query_input_ids,
+                'query_attention_mask': query_attention_mask,
+                'doc_input_ids': doc_input_ids,
+                'doc_attention_mask': doc_attention_mask,
+                'label': label}
+
+
+
+
+
 query_embedding = pad_sequence([torch.tensor(embedding) for embedding in query_embedding], 
                                         batch_first=True, padding_value=0.0)
 doc_embedding = pad_sequence([torch.tensor(embedding) for embedding in doc_embedding], 
