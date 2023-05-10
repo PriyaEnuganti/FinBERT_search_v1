@@ -1,3 +1,44 @@
+
+df = pd.read_csv('your_dataset.csv')
+grouped = df.groupby('category')['keywords'].apply(lambda x: ' '.join(x)).reset_index()
+def generate_wordcloud(text):
+    stopwords = set(STOPWORDS)
+    wordcloud = WordCloud(width=800, height=800,
+                          background_color='white',
+                          stopwords=stopwords,
+                          min_font_size=10).generate(text)
+    return wordcloud
+    
+for index, row in grouped.iterrows():
+    category = row['category']
+    text = row['keywords']
+    wordcloud = generate_wordcloud(text)
+    plt.figure(figsize=(8, 8), facecolor=None)
+    plt.imshow(wordcloud)
+    plt.axis("off")
+    plt.tight_layout(pad=0)
+    plt.title(category)
+    plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import requests
 from bs4 import BeautifulSoup
 
