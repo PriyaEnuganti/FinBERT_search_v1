@@ -1,6 +1,48 @@
 import requests
 from bs4 import BeautifulSoup
 
+# Login credentials
+username = 'your_username'
+password = 'your_password'
+
+# Login URL and search URL
+login_url = 'https://example.com/login'
+search_url = 'https://example.com/search'
+
+# Create a session to persist the login cookies
+session = requests.session()
+
+# Send a POST request with login credentials to the login URL
+login_data = {
+    'username': username,
+    'password': password
+}
+response = session.post(login_url, data=login_data)
+
+# Check if login was successful
+if response.status_code == 200:
+    # Send a GET request to the search URL
+    search_term = 'your_search_term'
+    search_params = {
+        'q': search_term
+    }
+    response = session.get(search_url, params=search_params)
+
+    # Parse the HTML response using BeautifulSoup
+    soup = BeautifulSoup(response.content, 'html.parser')
+
+    # Process the search results as required
+    # ...
+else:
+    print('Login failed')
+
+
+
+
+
+import requests
+from bs4 import BeautifulSoup
+
 search_term = 'Python programming'
 
 # Send a GET request to the Google search page
