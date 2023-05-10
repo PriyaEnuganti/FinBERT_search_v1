@@ -1,3 +1,27 @@
+import requests
+from bs4 import BeautifulSoup
+
+search_term = 'Python programming'
+
+# Send a GET request to the Google search page
+url = f'https://www.google.com/search?q={search_term}'
+response = requests.get(url)
+
+# Parse the HTML response using BeautifulSoup
+soup = BeautifulSoup(response.content, 'html.parser')
+
+# Find all the search results on the page
+search_results = soup.find_all('div', class_='g')
+
+# Print the title and URL of each search result
+for result in search_results:
+    title = result.find('h3').text
+    url = result.find('a')['href']
+    print(f'{title}: {url}')
+
+
+
+
 Preprocessing the data: The first step is to preprocess the data. The documents and user queries need to be cleaned and tokenized before feeding them into the model. You may also need to apply some specific preprocessing steps depending on the nature of the data.
 
 
