@@ -1,0 +1,29 @@
+from matplotlib_venn import venn2
+
+# Generate word clouds for two categories
+text1 = ' '.join(grouped[grouped['category'] == 'Category 1']['keywords'].tolist()[0])
+text2 = ' '.join(grouped[grouped['category'] == 'Category 2']['keywords'].tolist()[0])
+wordcloud1 = generate_wordcloud(text1)
+wordcloud2 = generate_wordcloud(text2)
+
+# Get the sets of words for each category
+set1 = set(text1.split())
+set2 = set(text2.split())
+
+# Create a Venn diagram
+venn2([set1, set2], set_colors=('red', 'blue'), set_labels=('Category 1', 'Category 2'))
+
+# Display the word clouds
+plt.figure(figsize=(8, 8), facecolor=None)
+plt.imshow(wordcloud1)
+plt.axis("off")
+plt.tight_layout(pad=0)
+plt.title('Category 1')
+plt.show()
+
+plt.figure(figsize=(8, 8), facecolor=None)
+plt.imshow(wordcloud2)
+plt.axis("off")
+plt.tight_layout(pad=0)
+plt.title('Category 2')
+plt.show()
