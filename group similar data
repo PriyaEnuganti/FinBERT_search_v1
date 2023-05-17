@@ -1,0 +1,39 @@
+import pandas as pd
+import textdistance
+
+# Example DataFrame with content column
+df = pd.DataFrame({'content': ['This is the first document.',
+                               'This document is the second document.',
+                               'And this is the third one.',
+                               'Is this the first document?']})
+
+# Threshold for similarity (e.g., 80%)
+threshold = 0.8
+
+# Initialize a dictionary to store groups
+groups = {}
+
+# Group similar rows
+for i in range(len(df)):
+    group_id = None
+    for key, indices in groups.items():
+        # Check if similarity with existing group is above the threshold
+        if all(textdistance.levenshtein.normalized_similarity(df.loc[i, 'content'], df.loc[idx, 'content']) >= threshold
+               for idx in indices):
+            group_id = key
+            break
+    
+    if group_id is None:
+        # Create a new group
+        group_id = len(groups)
+        groups[group_id] = [i]
+    else:
+        # Add to an existing group
+        groups[group_id].append(i)
+
+# Print the groups
+for group_id, indices in groups.items():
+    print(f"Group {group_id}:")
+    for idx in indices:
+        print(df.loc[idx, 'content'])
+    print()
