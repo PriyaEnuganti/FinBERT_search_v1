@@ -1,0 +1,31 @@
+import csv
+
+# Sample data
+query = "query 1"
+titles = [
+    "Title 1",
+    "Title 2",
+    "Title 3",
+    "Title 4",
+    "Title 5"
+]
+urls = [
+    "https://example.com/page1",
+    "https://example.com/page2",
+    "https://example.com/page3",
+    "https://example.com/page4",
+    "https://example.com/page5"
+]
+
+# Specify the new file path
+csv_file = "new_query_details.csv"
+
+# Write data to the new CSV file
+with open(csv_file, mode='w', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerow(['query'])  # Write header row for query
+    writer.writerow([query])  # Write query row
+    writer.writerow(['title', 'url'])  # Write header row for titles and URLs
+    writer.writerows(zip(titles, urls))  # Write title and URL rows
+
+print("Data saved to", csv_file)
