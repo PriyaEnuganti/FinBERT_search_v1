@@ -1,3 +1,60 @@
+import pandas as pd
+from itertools import combinations
+
+# Create a sample DataFrame
+data = {
+    'Name': ['Alice', 'Bob', 'Charlie', 'David', 'Eve'],
+    'Keywords': [['apple', 'banana', 'orange'], ['apple', 'banana'], ['banana', 'orange'], ['apple', 'orange'], ['orange']],
+}
+df = pd.DataFrame(data)
+
+# Split the 'Keywords' column into individual keyword lists for each name
+df['Keyword_list'] = df['Keywords'].apply(lambda x: [keyword for keyword in x])
+
+# Generate pairs of names
+pairs = list(combinations(df['Name'], 2))
+
+# Initialize lists to store the results
+name1_list = []
+name2_list = []
+count_list = []
+intersection_list = []
+
+# Find the intersection of keyword sets for each pair of names
+for name1, name2 in pairs:
+    keywords1 = set(df[df['Name'] == name1]['Keyword_list'].iloc[0])
+    keywords2 = set(df[df['Name'] == name2]['Keyword_list'].iloc[0])
+    intersection = list(keywords1.intersection(keywords2))
+    count = len(intersection)
+    
+    # Append the results to the lists
+    name1_list.append(name1)
+    name2_list.append(name2)
+    count_list.append(count)
+    intersection_list.append(intersection)
+
+# Create a new DataFrame with the results
+result_df = pd.DataFrame({
+    'Name 1': name1_list,
+    'Name 2': name2_list,
+    'Count of Intersection': count_list,
+    'Intersection Keywords': intersection_list
+})
+
+# Sort the DataFrame by the count of intersection in descending order
+result_df = result_df.sort_values('Count of Intersection', ascending=False)
+
+# Print the resulting DataFrame
+print(result_df)
+
+
+
+
+
+
+
+
+
 
 import pandas as pd
 import matplotlib.pyplot as plt
