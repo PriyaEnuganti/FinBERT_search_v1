@@ -18,6 +18,13 @@ Take action: Based on your analysis, take appropriate actions to improve the use
 
 
 
+In SearchBlox, the search activity data is typically stored in a database. SearchBlox uses an embedded Apache Lucene index to store the indexed content and search metadata. It also supports multiple backend databases, such as MySQL, PostgreSQL, and Elasticsearch, for storing the search analytics and tracking data.
+
+When search tracking is enabled, SearchBlox captures and stores the relevant search activity data in the configured database. This data includes information such as search queries, user identifiers (if available), timestamps, IP addresses, user agents, and other session-related details.
+
+The specific configuration and location of the database where the data is stored depend on your SearchBlox setup. During the installation and configuration process, you will typically specify the database connection details, including the database type, host, port, credentials, and database name.
+
+
 
 
 
