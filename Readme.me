@@ -1,4 +1,32 @@
 
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Create a sample DataFrame
+data = {'Query': ['apple', 'banana orange', 'kiwi', 'grape lemon lime']}
+df = pd.DataFrame(data)
+
+# Split the search terms by space and count the number of words
+df['Word_Count'] = df['Query'].apply(lambda x: len(x.split()))
+
+# Calculate the frequency of different word counts
+word_count_freq = df['Word_Count'].value_counts().sort_index()
+
+# Specify a color palette for the bars
+colors = sns.color_palette('Set3', len(word_count_freq))
+
+# Create a bar plot with different colors for each bar
+plt.bar(word_count_freq.index, word_count_freq.values, color=colors)
+
+# Set labels and title
+plt.xlabel('Number of Words')
+plt.ylabel('Frequency')
+plt.title('Number of Words in Search Terms')
+
+plt.show()
+
+
 
 import nltk
 nltk.download('words')
