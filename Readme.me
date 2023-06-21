@@ -1,4 +1,39 @@
 import pandas as pd
+import matplotlib.pyplot as plt
+
+# Create a sample dataframe
+data = {
+    'occurrences': [10, 20, 30, 40, 50],
+    'visits': [12, 18, 36, 42, 45]
+}
+
+df = pd.DataFrame(data)
+
+# Calculate the percentage difference
+df['percentage_difference'] = ((df['occurrences'] - df['visits']) / df['visits']) * 100
+
+# Define the bins for the histogram
+bins = [-50, -20, 0, 20, 50]
+
+# Define colors for each bin
+colors = ['red', 'orange', 'green', 'blue']
+
+# Create the histogram with colored bins
+plt.hist(df['percentage_difference'], bins=bins, color=colors)
+
+# Add labels and title to the plot
+plt.xlabel('Percentage Difference')
+plt.ylabel('Frequency')
+plt.title('Distribution of Percentage Difference')
+
+# Show the plot
+plt.show()
+
+
+
+
+
+import pandas as pd
 import nltk
 from nltk.corpus import stopwords
 from wordcloud import WordCloud
