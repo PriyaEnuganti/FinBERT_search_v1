@@ -1,3 +1,50 @@
+import pandas as pd
+import nltk
+from nltk.corpus import stopwords
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
+
+# Create a sample DataFrame
+data = {'Query': ['apple', 'banana orange', 'kiwi', 'grape', '22-10-22', 'apple'],
+        'Occurrence': [5, 10, 3, 8, 2, 6]}
+
+df = pd.DataFrame(data)
+
+# Define the list of search terms
+search_terms = ['apple', 'orange', 'kiwi']
+
+# Filter the DataFrame for the search terms
+filtered_df = df[df['Query'].apply(lambda x: any(term in x.lower() for term in search_terms))]
+
+# Join all the filtered queries into a single string
+filtered_queries = ' '.join(filtered_df['Query'])
+
+# Tokenize the filtered queries
+tokens = nltk.word_tokenize(filtered_queries)
+
+# Remove stopwords and single-character words
+stop_words = set(stopwords.words('english'))
+filtered_tokens = [token for token in tokens if len(token) > 1 and token.lower() not in stop_words]
+
+# Create a frequency distribution of the filtered tokens
+freq_dist = nltk.FreqDist(filtered_tokens)
+
+# Generate a word cloud based on the occurrence column
+wordcloud = WordCloud().generate_from_frequencies(freq_dist)
+
+# Display the word cloud
+plt.figure(figsize=(8, 6))
+plt.imshow(wordcloud, interpolation='bilinear')
+plt.axis('off')
+plt.title('Word Cloud')
+plt.show()
+
+
+
+
+
+
+
 
 import pandas as pd
 import matplotlib.pyplot as plt
