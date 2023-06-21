@@ -1,3 +1,51 @@
+
+
+import nltk
+nltk.download('words')
+from nltk.corpus import words
+
+def find_non_dictionary_words(dataframe, column_name):
+    non_dict_words = []
+
+    # Iterate over the rows in the specified column
+    for index, row in dataframe.iterrows():
+        text = row[column_name]
+        words_list = text.split()
+
+        # Check each word if it is present in the dictionary
+        for word in words_list:
+            if word.lower() not in words.words():
+                non_dict_words.append((index, word))
+
+    # Create a new DataFrame containing the rows with non-dictionary words
+    non_dict_df = dataframe.loc[[index for index, _ in non_dict_words]]
+
+    return non_dict_df
+
+# Example usage
+import pandas as pd
+
+# Create a sample DataFrame
+data = {'Text': ['This is a sample sentence.',
+                 'It contains some words that are not in the dictionary.',
+                 'But other words are valid.',
+                 'Check for non-dictionary words.']}
+df = pd.DataFrame(data)
+
+# Call the function to find non-dictionary words in the 'Text' column
+result = find_non_dictionary_words(df, 'Text')
+
+# Print the resulting DataFrame
+print(result)
+
+
+
+
+
+
+
+
+
 Enable search tracking: In your SearchBlox admin panel, ensure that search tracking is enabled. This feature allows you to capture and store search activity data.
 
 Identify abandoned searches: Determine the criteria for classifying a search as "abandoned." For example, you might consider searches where users do not click on any search results or where they leave the search page quickly without any further interaction.
