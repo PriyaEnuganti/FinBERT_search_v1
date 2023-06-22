@@ -1,6 +1,38 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
+# Example DataFrames
+df1 = pd.DataFrame({'queries': ['apple', 'banana and orange', 'grapefruit']})
+df2 = pd.DataFrame({'queries': ['watermelon', 'kiwi and pineapple', 'mango and papaya']})
+
+# Calculate number of words in queries column
+df1['word_count'] = df1['queries'].str.split().apply(len)
+df2['word_count'] = df2['queries'].str.split().apply(len)
+
+# Create a new DataFrame to store counts
+df_counts = pd.DataFrame({
+    'DataFrame 1': df1['word_count'],
+    'DataFrame 2': df2['word_count']
+})
+
+# Plot the bar plot
+df_counts.plot(kind='bar')
+plt.xlabel('Queries')
+plt.ylabel('Word Count')
+plt.title('Comparison of Word Count in Queries')
+plt.show()
+
+
+
+
+
+
+
+
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
 # Create a sample dataframe
 data = {
     'occurrences': [10, 20, 30, 40, 50],
