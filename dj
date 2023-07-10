@@ -1,0 +1,75 @@
+from django.db import models
+
+class IndexedHTML(models.Model):
+    title = models.CharField(max_length=100)
+    content = models.TextField()
+    url = models.URLField()
+
+
+
+
+from django.core.management.base import BaseCommand
+from django.utils.html import strip_tags
+from app_name.models import IndexedHTML
+import os
+
+class Command(BaseCommand):
+    help = 'Indexes HTML files'
+
+    def handle(self, *args, **options):
+        html_dir = 'html_data'  # Directory path where HTML files are located
+
+        # Iterate through the HTML files in the directory
+        for filename in os.listdir(html_dir):
+            if filename.endswith('.html'):
+                file_path = os.path.join(html_dir, filename)
+
+                with open(file_path, 'r') as file:
+                    html_content = file.read()
+                    title = strip_tags(html_content).split('\n')[0]  # Extract the title
+                    content = strip_tags(html_content)  # Remove HTML tags from content
+                    url = 'http://example.com/' + filename  # Replace with appropriate URL
+
+                    IndexedHTML.objects.create(title=title, content=content, url=url)
+
+        self.stdout.write(self.style.SUCCESS('Successfully indexed HTML files.'))
+
+
+
+
+from django.shortcuts import render
+from app_name.models import IndexedHTML
+
+def search_view(request):
+    query = request.GET.get('q')
+    results = []
+
+    if query:
+        results = IndexedHTML.objects.filter(content__icontains=query)
+
+    return render(request, 'search.html', {'results': results})
+
+
+
+<form action="{% url 'search' %}" method="GET">
+    <input type="text" name="q" placeholder="Search...">
+    <button type="submit">Search</button>
+</form>
+
+<ul>
+    {% for result in results %}
+        <li><a href="{{ result.url }}">{{ result.title }}</a></li>
+    {% empty %}
+        <li>No results found.</li>
+    {% endfor %}
+</ul>
+
+
+
+
+from django.urls import path
+from app_name.views import search_view
+
+urlpatterns = [
+    path('search/', search_view, name='search'),
+]
