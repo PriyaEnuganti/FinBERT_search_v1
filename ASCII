@@ -1,0 +1,66 @@
+  User
+    |
+    | Make content changes
+    | in Drupal
+    |
+  Drupal
+    |
+    | Trigger content update
+    | in TestInstance
+    |
+TestInstance
+    |
+    | Update search index
+    | Log technical logs
+    | Track search index update
+    |
+  User
+    |
+    | Perform search in DevInstance
+    |
+DevInstance
+    |
+    | Process search query
+    | Log technical logs
+    | Track search query event
+    |
+  User
+    |
+    | Perform search in TestInstance
+    |
+TestInstance
+    |
+    | Process search query
+    | Log technical logs
+    | Track search query event
+    |
+  User
+    |
+    | Compare search results
+    | between Test and Dev instances
+    |
+  User
+    |
+    | Move to production
+    |
+ProductionInstance
+    |
+    | Push TestInstance to production
+    | Update production instance
+    | Log technical logs
+    | Track production deployment event
+    |
+  User
+    |
+    | Perform search in ProductionInstance
+    |
+ProductionInstance
+    |
+    | Process search query
+    | Log technical logs
+    | Track search query event
+    |
+  User
+    |
+    | Return search results
+    |
