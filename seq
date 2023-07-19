@@ -1,0 +1,61 @@
+User
+    |
+    | Make content changes
+    | in Drupal
+    |
+  Drupal
+    |
+    | Trigger content update
+    | in SearchBlox
+    |
+SearchBlox
+    |
+    | Refresh search index
+    |
+SearchBlox
+    |
+    | Perform search in DevInstance
+    |
+DevInstance
+    |
+    | Process search query
+    | Log technical details
+    | Log user experience data
+    |
+SearchBlox
+    |
+    | Perform search in TestInstance
+    |
+TestInstance
+    |
+    | Process search query
+    | Log technical details
+    | Log user experience data
+    |
+User
+    |
+    | Compare search results
+    | between TestInstance and DevInstance
+    |
+User
+    |
+    | Move to production
+    |
+SearchBlox
+    |
+    | Push TestInstance to production
+    |
+ProductionInstance
+    |
+    | Perform search in ProductionInstance
+    |
+ProductionInstance
+    |
+    | Process search query
+    | Log technical details
+    | Log user experience data
+    |
+User
+    |
+    | Return search results
+    |
