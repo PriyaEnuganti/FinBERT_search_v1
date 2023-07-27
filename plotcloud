@@ -1,0 +1,31 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+from wordcloud import WordCloud
+
+# Sample DataFrame (Replace this with your actual DataFrame)
+data = {
+    'Search_Term': ['apple', 'banana', 'orange', 'kiwi', 'grape'],
+    'Occurrences': [8, 10, 5, 3, 7]
+}
+df = pd.DataFrame(data)
+
+# Sample list of search terms (Replace this with your actual list of search terms)
+search_term_list = ['apple', 'kiwi', 'banana', 'pear']
+
+# Filter the DataFrame to include only the search terms present in the list
+filtered_df = df[df['Search_Term'].isin(search_term_list)]
+
+# Create a dictionary from the filtered DataFrame
+word_freq = dict(zip(filtered_df['Search_Term'], filtered_df['Occurrences']))
+
+# Create a WordCloud object
+wordcloud = WordCloud(width=800, height=400, background_color='white')
+
+# Generate the word cloud using the word-frequency data
+wordcloud.generate_from_frequencies(frequencies=word_freq)
+
+# Display the word cloud using matplotlib
+plt.figure(figsize=(10, 5))
+plt.imshow(wordcloud, interpolation='bilinear')
+plt.axis('off')  # Hide axes
+plt.show()
