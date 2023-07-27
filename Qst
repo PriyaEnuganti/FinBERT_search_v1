@@ -1,0 +1,25 @@
+import pandas as pd
+
+# Sample DataFrame (Replace this with your actual DataFrame)
+data = {
+    'query_column': ['apple pie', 'banana split', 'orange juice', 'kiwi fruit', 'grape jelly', 'pear tart'],
+}
+df = pd.DataFrame(data)
+
+# Sample list of search terms (Replace this with your actual list of search terms)
+search_term_list = ['apple', 'kiwi', 'banana', 'pear']
+
+# Create a regular expression pattern using "OR" (|) to match any element from the search term list
+pattern = '|'.join(search_term_list)
+
+# Perform the reverse right look using str.contains() method with the pattern
+matching_rows = df[df['query_column'].str.contains(pattern, case=False, regex=True)]
+
+# Count of elements from 'search_term_list' found in 'query_column'
+count_of_matches = len(matching_rows)
+
+# Percentage of elements from 'search_term_list' found in 'query_column'
+percentage_of_matches = (count_of_matches / len(search_term_list)) * 100
+
+print("Count of matches:", count_of_matches)
+print("Percentage of matches:", percentage_of_matches)
