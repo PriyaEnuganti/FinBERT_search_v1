@@ -50,3 +50,24 @@ For each category, we've analyzed the alignment between advisor search prompts a
 
 These figures shed light on the alignment between user queries and content strategy, informing our ongoing efforts.
 
+
+
+
+**Search Prompt:**
+
+A search prompt refers to the specific queries entered by advisors in the Adobe search system during the period from January 2022 to August 2022. These prompts represent the information needs and intentions of advisors seeking content.
+
+**Keyword:**
+
+Keywords are words or phrases assigned to SAC (Subject Area Category) pages based on the content within those pages. They play a crucial role in connecting advisor search prompts to relevant content, enhancing search result accuracy and user experience.
+
+**Data Sources:**
+
+- Adobe Search Report (Jan 2022 - Aug 2022)
+- Inventory Report (SAC Pages, Metadata, Keywords)
+
+Understanding these definitions and the data sources enables us to unravel meaningful insights and enhance the alignment between advisor queries and content offerings.
+
+
+
+
