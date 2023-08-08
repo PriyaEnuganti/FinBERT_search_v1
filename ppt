@@ -1,3 +1,34 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Sample data (replace with your data)
+search_phrases = ["phrase1", "phrase2", "phrase3", ...]
+search_frequencies = [100, 50, 25, ...]
+
+# Calculate ranks
+ranks = np.arange(1, len(search_phrases) + 1)
+
+# Calculate expected frequencies using Zipf's Law formula
+k = search_frequencies[0] * ranks[0]  # Adjust the constant as needed
+s = 1.0  # Exponent
+expected_frequencies = k / np.power(ranks, s)
+
+# Plot the data
+plt.figure()
+plt.loglog(ranks, search_frequencies, marker='o', label='Actual Frequencies')
+plt.loglog(ranks, expected_frequencies, marker='x', label='Expected Frequencies (Zipf\'s Law)')
+plt.xlabel('Rank')
+plt.ylabel('Frequency')
+plt.legend()
+plt.title('Zipf\'s Law Distribution Curve')
+plt.grid(True)
+plt.show()
+
+
+
+
+
+
 **Left Side: Purpose and Significance of Analysis**
 
 **Why Analyze?**
