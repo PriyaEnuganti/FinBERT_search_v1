@@ -20,6 +20,53 @@ for filename in os.listdir(directory_path):
         with open(file_path, 'r', encoding='utf-8') as file:
             all_content += file.read() + " "  # Merge content with space
 
+# Initialize lists to store cumulative unique and total words
+cumulative_unique_words = []
+cumulative_total_words = []
+total_unique_words = set()  # To keep track of unique words across articles
+
+# Iterate through each word in the merged corpus
+words = all_content.split()
+for word in words:
+    total_unique_words.add(word)  # Add word to unique set
+    cumulative_unique_words.append(len(total_unique_words))
+    cumulative_total_words.append(len(cumulative_total_words) + 1)
+
+# Plot the continuous curve
+plt.plot(cumulative_total_words, cumulative_unique_words)
+plt.title("Heap's Distribution Curve of Unique Words vs. Total Words (Continuous)")
+plt.xlabel('Total Words')
+plt.ylabel('Unique Words')
+plt.grid(True)
+plt.show()
+
+
+
+
+
+
+import os
+import matplotlib.pyplot as plt
+import numpy as np
+from collections import Counter
+
+# Path to the directory containing text files
+directory_path = 'path_to_your_text_files_directory'
+
+# Function to calculate unique and total words in a text file
+def count_unique_total_words(content):
+    words = content.split()
+    unique_words = set(words)
+    return len(unique_words), len(words)
+
+# Read and merge all articles
+all_content = ""
+for filename in os.listdir(directory_path):
+    if filename.endswith('.txt'):
+        file_path = os.path.join(directory_path, filename)
+        with open(file_path, 'r', encoding='utf-8') as file:
+            all_content += file.read() + " "  # Merge content with space
+
 # Calculate unique and total words for the merged corpus
 unique_words, total_words = count_unique_total_words(all_content)
 
