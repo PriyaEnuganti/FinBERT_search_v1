@@ -1,3 +1,38 @@
+import os
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Path to the directory containing text files
+directory_path = 'path_to_your_text_files_directory'
+
+# Function to calculate word count in a text file
+def count_words(filename):
+    with open(filename, 'r', encoding='utf-8') as file:
+        content = file.read()
+        words = content.split()
+        return len(words)
+
+# List to store word counts
+word_counts = []
+
+# Iterate through text files and calculate word counts
+for filename in os.listdir(directory_path):
+    if filename.endswith('.txt'):
+        file_path = os.path.join(directory_path, filename)
+        word_count = count_words(file_path)
+        word_counts.append(word_count)
+
+# Plot heap distribution curve
+plt.hist(word_counts, bins=20, edgecolor='black')
+plt.title('Heap Distribution Curve of Web Articles')
+plt.xlabel('Word Count')
+plt.ylabel('Frequency')
+plt.show()
+
+
+
+
+
 import pandas as pd
 import matplotlib.pyplot as plt
 
