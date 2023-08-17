@@ -1,5 +1,43 @@
 import os
 import matplotlib.pyplot as plt
+import numpy as np
+from collections import Counter
+
+# Path to the directory containing text files
+directory_path = 'path_to_your_text_files_directory'
+
+# Function to calculate unique and total words in a text file
+def count_unique_total_words(content):
+    words = content.split()
+    unique_words = set(words)
+    return len(unique_words), len(words)
+
+# Read and merge all articles
+all_content = ""
+for filename in os.listdir(directory_path):
+    if filename.endswith('.txt'):
+        file_path = os.path.join(directory_path, filename)
+        with open(file_path, 'r', encoding='utf-8') as file:
+            all_content += file.read() + " "  # Merge content with space
+
+# Calculate unique and total words for the merged corpus
+unique_words, total_words = count_unique_total_words(all_content)
+
+# Plot heap distribution curve (curve plot)
+plt.plot(total_words, unique_words, marker='o')
+plt.title("Heap's Distribution Curve of Unique Words vs. Total Words (Merged Corpus)")
+plt.xlabel('Total Words')
+plt.ylabel('Unique Words')
+plt.grid(True)
+plt.show()
+
+
+
+
+
+
+import os
+import matplotlib.pyplot as plt
 import seaborn as sns
 from collections import Counter
 
