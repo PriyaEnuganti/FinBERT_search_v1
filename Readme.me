@@ -1,6 +1,48 @@
 import os
 import matplotlib.pyplot as plt
 import numpy as np
+from collections import Counter
+
+# Path to the directory containing text files
+directory_path = 'path_to_your_text_files_directory'
+
+# Function to calculate unique and total words in a text file
+def count_unique_total_words(filename):
+    with open(filename, 'r', encoding='utf-8') as file:
+        content = file.read()
+        words = content.split()
+        unique_words = set(words)
+        return len(unique_words), len(words)
+
+# Lists to store unique words and total words
+all_unique_words = []
+all_total_words = []
+
+# Iterate through text files and calculate unique and total words
+for filename in os.listdir(directory_path):
+    if filename.endswith('.txt'):
+        file_path = os.path.join(directory_path, filename)
+        unique_words, total_words = count_unique_total_words(file_path)
+        all_unique_words.append(unique_words)
+        all_total_words.append(total_words)
+
+# Plot heap distribution curve
+plt.scatter(all_total_words, all_unique_words, alpha=0.5)
+plt.title('Heap Distribution Curve of Unique Words vs. Total Words (All Articles)')
+plt.xlabel('Total Words')
+plt.ylabel('Unique Words')
+plt.show()
+
+
+
+
+
+
+
+
+import os
+import matplotlib.pyplot as plt
+import numpy as np
 
 # Path to the directory containing text files
 directory_path = 'path_to_your_text_files_directory'
