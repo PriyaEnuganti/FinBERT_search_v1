@@ -1,3 +1,47 @@
+import pandas as pd
+from collections import Counter
+
+# Sample data
+data = {'ip_address': ['192.168.1.1', '192.168.1.2', '192.168.1.3', '192.168.1.4'],
+        'query': ['apple', 'app', 'application', 'banana']}
+
+# Create a DataFrame
+df = pd.DataFrame(data)
+
+# Remove queries with less than 3 characters
+df = df[df['query'].str.len() >= 3]
+
+# Sort the DataFrame by ip_address
+df = df.sort_values(by='ip_address')
+
+# Initialize variables
+previous_query = ''
+rows_to_remove = []
+
+# Iterate through the DataFrame
+for index, row in df.iterrows():
+    current_query = row['query']
+    
+    if current_query.startswith(previous_query):
+        rows_to_remove.append(index)
+    else:
+        previous_query = current_query
+
+# Drop the rows that need to be removed
+df_cleaned = df.drop(rows_to_remove)
+
+# Count the frequency of each search term
+query_frequency = Counter(df_cleaned['query'])
+
+# Create a DataFrame with query and its frequency
+frequency_df = pd.DataFrame(query_frequency.items(), columns=['query', 'frequency'])
+
+print(frequency_df)
+
+
+
+
+
 import os
 import matplotlib.pyplot as plt
 import numpy as np
