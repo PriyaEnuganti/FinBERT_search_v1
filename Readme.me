@@ -1,3 +1,57 @@
+import pandas as pd
+
+# Load inventory report and search data frames
+inventory_report_df = pd.read_csv('inventory_report.csv')  # Replace with actual file path
+search_df = pd.read_csv('search_data.csv')  # Replace with actual file path
+
+# Function to process URLs
+def process_url(url):
+    parts = url.split('/')
+    last_part = parts[-1].replace('.html', '')  # Remove .html extension
+    return last_part
+
+# Create empty lists to store extracted information
+metadata_list = []
+keywords_list = []
+content_list = []
+
+# Process URLs in the search data frame
+search_df['processed_url'] = search_df['url'].apply(process_url)
+
+# Iterate through rows in the search data frame
+for index, search_row in search_df.iterrows():
+    processed_search_url = search_row['processed_url']
+    
+    # Search for matching URL in the inventory report data frame
+    matching_row = inventory_report_df[inventory_report_df['url'].str.contains(processed_search_url)]
+    
+    if not matching_row.empty:
+        # Extract information from the matching row
+        metadata = matching_row.iloc[0]['metadata']
+        keywords = matching_row.iloc[0]['keywords']
+        content = matching_row.iloc[0]['content']
+        
+        # Append extracted information to the respective lists
+        metadata_list.append(metadata)
+        keywords_list.append(keywords)
+        content_list.append(content)
+    else:
+        # If no match is found, append None values
+        metadata_list.append(None)
+        keywords_list.append(None)
+        content_list.append(None)
+
+# Add the extracted information to the search data frame
+search_df['metadata'] = metadata_list
+search_df['keywords'] = keywords_list
+search_df['content'] = content_list
+
+# Save the updated search data frame to a new CSV file
+search_df.to_csv('updated_search_data.csv', index=False)  # Replace with desired file name
+
+
+
+
 
 import pandas as pd
 
