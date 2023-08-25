@@ -1,3 +1,34 @@
+Documentation: Analyzing Adobe SAC Search Data
+
+Step 1: Loading and Cleaning Adobe Data for SAC Search
+
+Load Adobe data for SAC search from the past month.
+Perform data clean-up to process search terms.
+Step 2: Zipf's Distribution Curve Analysis
+
+Use search terms and occurrences to generate Zipf's distribution curve.
+Analyze the distribution to understand search term behavior.
+Identify terms falling within short and medium head ranges.
+Step 3: Extracting Top Data for Metric Building
+
+Select top search terms for further analysis and metric creation.
+Step 4: Pulling Top 10 Results
+
+Generate authentication token for accessing searchIntegration API.
+Retrieve top 10 results using the token.
+Extract title and URL from the API response and save to a dataframe.
+Step 5: Retrieving Additional Details
+
+Obtain keywords, metadata descriptions, and SAC page content from an inventory report.
+Match the URLs obtained from the API with those in the inventory report.
+Note: The content is pulled from the Drupal content delivery API and added to the inventory report via URL matching. This is a one-time process unless new SAC pages are added in the future.
+Step 6: Finalizing the Metrics
+
+Combine extracted data to build desired metrics.
+This updated outline includes the note you provided, clarifying the process of pulling content from the Drupal API and its integration into the inventory report. Feel free to expand each section with more detailed explanations and relevant code samples as needed.
+
+
+
 import pandas as pd
 
 # Load inventory report and search data frames
