@@ -1,1 +1,29 @@
-/
+import pandas as pd
+
+# First, merge the dataframes on the 'query' column
+merged_df = df2.merge(df1, on='query', how='left')
+
+# Create a function to handle the rank and relevancy values
+def get_rank_relevancy(row):
+    query_rank = row['Rank_x']
+    url = row['url_y']
+    query_results = row['url_x']
+
+    if pd.notna(query_rank):
+        return query_rank, 'High'  # Set relevancy to 'High' if there's a match in the first dataframe
+    elif url in query_results:
+        return query_results.index(url) + 1, 'Medium'  # Set relevancy to 'Medium' if URL is found in the same position
+    else:
+        return None, None
+
+# Apply the function to create new 'Rank' and 'Relevancy' columns
+merged_df[['Rank', 'Relevancy']] = merged_df.apply(get_rank_relevancy, axis=1, result_type='expand')
+
+# Drop unnecessary columns
+merged_df = merged_df.drop(['Rank_x', 'url_x', 'url_y'], axis=1)
+
+# Fill NaN values with 'Blank' for 'Rank' and 'Relevancy'
+merged_df[['Rank', 'Relevancy']] = merged_df[['Rank', 'Relevancy']].fillna('Blank')
+
+# Now, you have the updated dataframe in merged_df with 'Rank' and 'Relevancy' columns filled accordingly.
+
