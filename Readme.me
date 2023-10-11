@@ -1,5 +1,41 @@
 import pandas as pd
 
+# Merge dataframes based on 'query' to get Relevancy values
+merged_df = df2.merge(df1[['query', 'Relevancy']], on='query', how='left')
+
+# Function to find the matching URL positions and assign Rank
+def assign_rank(row, df1):
+    query = row['query']
+    url = row['url']
+
+    # Check if there's a Rank in df1 for this query
+    rank_value = df1.loc[df1['query'] == query, 'Rank'].values
+
+    if not pd.isna(rank_value):
+        # Find all rows in df2 with the same query
+        query_rows = df2[df2['query'] == query]
+
+        # Iterate through the URL positions
+        for index, query_row in query_rows.iterrows():
+            if query_row['url'] == url:
+                return index + 1  # Assign Rank based on position
+    return rank_value  # If no URL match, use the Rank from df1
+
+# Apply the function to create 'Rank' column in df2
+merged_df['Rank'] = merged_df.apply(assign_rank, args=(df1,), axis=1)
+
+# Fill NaN values in the 'Rank' and 'Relevancy' columns with 'Blank'
+merged_df['Rank'] = merged_df['Rank'].fillna('Blank')
+merged_df['Relevancy'] = merged_df['Relevancy'].fillna('Blank')
+
+# Now, you have the updated dataframe in merged_df with 'Rank' and 'Relevancy' values.
+
+
+
+
+
+import pandas as pd
+
 # First, merge the dataframes on the 'query' column
 merged_df = df2.merge(df1, on='query', how='left')
 
