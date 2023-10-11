@@ -1,3 +1,43 @@
+
+import pandas as pd
+
+# Initialize empty 'Rank' and 'Relevancy' columns in df2
+df2['Rank'] = ''
+df2['Relevancy'] = ''
+
+# Iterate through rows of df2
+for index, row in df2.iterrows():
+    query = row['query']
+    url = row['url']
+
+    # Find matching query in df1
+    matching_query = df1[df1['query'] == query]
+
+    # Check if a matching query was found
+    if not matching_query.empty:
+        # Assign 'Relevancy' from df1
+        df2.at[index, 'Relevancy'] = matching_query['Relevancy'].values[0]
+
+        # Check if 'Rank' is not NaN in df1
+        if not pd.isna(matching_query['Rank'].values[0]):
+            # Find all rows in df2 with the same query
+            query_rows = df2[df2['query'] == query]
+
+            # Iterate through the URL positions
+            for i, query_row in query_rows.iterrows():
+                if query_row['url'] == url:
+                    df2.at[i, 'Rank'] = i - query_rows.index[0] + 1  # Assign Rank based on position
+                    break
+
+# Fill NaN values in the 'Rank' and 'Relevancy' columns with 'Blank'
+df2['Rank'] = df2['Rank'].replace('', 'Blank')
+df2['Relevancy'] = df2['Relevancy'].replace('', 'Blank')
+
+# Now, df2 has 'Rank' and 'Relevancy' values based on your criteria.
+
+
+
+
 import pandas as pd
 
 # Merge dataframes based on 'query' to get Relevancy values
