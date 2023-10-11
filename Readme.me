@@ -1,3 +1,54 @@
+import pandas as pd
+
+# Sample dataframes with 10 rows for each query
+data1 = {'query': ['queryA'] * 10 + ['queryB'] * 10,
+         'url': [f'url{i}' for i in range(1, 11)] + [f'url{i}' for i in range(11, 21)],
+         'Rank': [2] * 10 + [4] * 10}
+
+data2 = {'query': ['queryX', 'queryA', 'queryY', 'queryB'],
+         'url': ['url1', 'url7', 'url15', 'url18']}
+
+df1 = pd.DataFrame(data1)
+df2 = pd.DataFrame(data2)
+
+# Initialize 'Rank' and 'Relevancy' columns in df2
+df2['Rank'] = 'Blank'
+df2['Relevancy'] = 'Blank'
+
+# Iterate through rows of df2
+for index, row in df2.iterrows():
+    query = row['query']
+    url = row['url']
+
+    # Find the row with 'Rank' value in df1 for the same query
+    rank_row = df1[(df1['query'] == query) & (~df1['Rank'].isna())]
+
+    if not rank_row.empty:
+        rank_url = rank_row['url'].values[0]
+
+        # Find the matching URL position in df2
+        matching_group = df2[(df2['query'] == query) & (df2['url'] == rank_url)]
+
+        if not matching_group.empty:
+            # Calculate 'Rank' based on the position of the matching URL
+            rank = matching_group.index[0] % 10 + 1
+            df2.at[index, 'Rank'] = rank
+
+    # Assign 'Relevancy' from df1
+    relevancy = df1[(df1['query'] == query) & (df1['url'] == url)]['Relevancy'].values
+    if len(relevancy) > 0:
+        df2.at[index, 'Relevancy'] = relevancy[0]
+
+# Now, df2 has 'Rank' and 'Relevancy' values based on your criteria.
+print(df2)
+
+
+
+
+
+
+
+
 
 import pandas as pd
 
